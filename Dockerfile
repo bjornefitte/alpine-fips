@@ -17,7 +17,7 @@ RUN apk update \
     && openssl sha1 -hmac etaonrishdlcupfm openssl-fips-$OPENSSL_FIPS_VER.tar.gz | grep $OPENSSL_FIPS_HMACSHA1 \
     && apk del openssl \
     && wget https://www.openssl.org/source/openssl-fips-$OPENSSL_FIPS_VER.tar.gz.asc \
-    && gpg --keyserver http://pgp.mit.edu --recv $OPENSSL_FIPS_PGP_FINGERPRINT \
+    && gpg --keyserver hkp://pgp.mit.edu:80 --recv $OPENSSL_FIPS_PGP_FINGERPRINT \
     && gpg --verify openssl-fips-$OPENSSL_FIPS_VER.tar.gz.asc \
     && echo "$OPENSSL_FIPS_HASH  openssl-fips-$OPENSSL_FIPS_VER.tar.gz" | sha256sum -c - | grep OK \
     && tar -xzf openssl-fips-$OPENSSL_FIPS_VER.tar.gz \
@@ -28,7 +28,7 @@ RUN apk update \
     && cd .. \
     && wget https://www.openssl.org/source/openssl-$OPENSSL_VER.tar.gz \
     && wget https://www.openssl.org/source/openssl-$OPENSSL_VER.tar.gz.asc \
-    && gpg --keyserver http://pgp.mit.edu --recv $OPENSSL_PGP_FINGERPRINT \
+    && gpg --keyserver hkp://pgp.mit.edu:80 --recv $OPENSSL_PGP_FINGERPRINT \
     && gpg --verify openssl-$OPENSSL_VER.tar.gz.asc \
     && echo "$OPENSSL_HASH  openssl-$OPENSSL_VER.tar.gz" | sha256sum -c - | grep OK \
     && tar -xzf openssl-$OPENSSL_VER.tar.gz \
