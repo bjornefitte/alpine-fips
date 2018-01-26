@@ -4,8 +4,8 @@ ARG OPENSSL_FIPS_VER=2.0.16
 ARG OPENSSL_FIPS_HMACSHA1=e8dbfa6cb9e22a049ec625ffb7ccaf33e6116598
 ARG OPENSSL_FIPS_HASH=a3cd13d0521d22dd939063d3b4a0d4ce24494374b91408a05bdaca8b681c63d4
 ARG OPENSSL_FIPS_PGP_FINGERPRINT=D3577507FA40E9E2
-ARG OPENSSL_VER=1.0.2k
-ARG OPENSSL_HASH=6b3977c61f2aedf0f96367dcfb5c6e578cf37e7b8d913b4ecb6643c3cb88d8c0
+ARG OPENSSL_VER=1.0.2n
+ARG OPENSSL_HASH=370babb75f278c39e0c50e8c4e7493bc0f18db6867478341a832a982fd15a8fe
 ARG OPENSSL_PGP_FINGERPRINT=D9C4D26D0E604491
 
 COPY test_fips.c /root/test_fips.c
@@ -42,8 +42,8 @@ RUN apk update \
     && make \
     && make install_sw \
     && cd /root \
-    && gcc test_fips.c -lssl -lcrypto -otest_fips \
+    && gcc test_fips.c -lssl -lcrypto -o test_fips \
     && chmod +x test_fips \
-    && ./test_fips \
-    && rm -rf openssl* /root/patches /var/cache/apk/* ~/.gnupg/ ~/.ash_history .wget-hsts test_fips* \
-    && apk del wget gcc gzip tar libc-dev ca-certificates perl make coreutils gnupg linux-headers    
+    && ./test_fips 
+
+RUN rm -rf openssl* /root/patches /var/cache/apk/* ~/.gnupg/ ~/.ash_history .wget-hsts test_fips*  && apk del wget gcc gzip tar libc-dev ca-certificates perl make coreutils gnupg linux-headers    
